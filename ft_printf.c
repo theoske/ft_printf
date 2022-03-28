@@ -6,14 +6,14 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/03/28 15:46:10 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/03/28 17:04:10 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 
-/* chercher % et les remplacer par variable ou juste les enlever
-	verifier cara par cara et str join*/
+/* chercher % et les remplacer par variable correspondante 
+	via conversions en char et strjoin*/
 
 size_t	ft_strlen(const char *s)
 {
@@ -41,11 +41,18 @@ char	*ft_stradd(char *ret, char addon)
 	return (ret);
 }
 
+char	*ft_percent(char *str, char *tab, int i)
+{
+	
+	return (tab);
+}
+
 //tab : resultat affichable
 int	ft_printf(const char *str, ...)
 {
 	int		i;
 	char	*tab;
+	va_list	arg;
 
 	i = 0;
 	tab = NULL;
@@ -53,27 +60,27 @@ int	ft_printf(const char *str, ...)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == '%' && str[i + 1] == 'c')
+		if (str[i + 1] == 'c')
 			ft_joinchar
-		else if (str[i] == '%' && str[i + 1] == 's')
+		else if (str[i + 1] == 's')
 			ft_joinstr
-		else if (str[i] == '%' && str[i + 1] == 'p')
+		else if (str[i + 1] == 'p')
 			ft_joinptr
-		else if (str[i] == '%' && str[i + 1] == 'd')
+		else if (str[i + 1] == 'd')
 			ft_joinnbr
-		else if (str[i] == '%' && str[i + 1] == 'i')
+		else if (str[i + 1] == 'i')
 			ft_joinnbr
-		else if (str[i] == '%' && str[i + 1] == 'u')
+		else if (str[i + 1] == 'u')
 			ft_joinnbr
-		else if (str[i] == '%' && str[i + 1] == 'x')
+		else if (str[i + 1] == 'x')
 			ft_joinhexamin
-		else if (str[i] == '%' && str[i + 1] == 'X')
+		else if (str[i + 1] == 'X')
 			ft_joinhexamaj
-		else if (str[i] == '%' && str[i + 1] == '%')//passe les deux '%'
-		{
-			tab = ft_stradd(tab, str[i])
-			i++;
-		}
+		else if (str[i + 1] == '%')//passe les deux '%'
+	{
+		tab = ft_stradd(tab, str[i])
+		i++;
+	}
 		else
 			tab = ft_stradd(tab, str[i])
 		i++;
@@ -90,3 +97,4 @@ int	main(void)
 	printf("manger des pates %r");
 	return (0);
 }
+		
