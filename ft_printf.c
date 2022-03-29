@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/03/29 18:05:07 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/03/29 18:41:12 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ char	*ft_charjoin(char *tab, char c)
 	return (str);
 }
 
+char	*ft_printf_options(char *tab, char *str, int i)
+{
+	
+}
+
 //tab : resultat affichable
 int	ft_printf(const char *str, ...)
 {
@@ -79,6 +84,11 @@ int	ft_printf(const char *str, ...)
 			tab = ft_charjoin(tab, str[i]);
 			i++;
 		}
+		if (str[i] && str[i] == '%')
+		{
+			tab = ft_printf_options(tab, str, i);
+			i++;
+		}
 	}
 	printf("%s", tab);
 	return (ft_strlen(tab));
@@ -88,7 +98,7 @@ int	main(void)
 {
 	// int	nbr = 4;
 
-	printf("%d", ft_printf("\nmanger des pates\n"));
+	printf("%d", ft_printf("\nmanger des p%ates\n"));
 	return (0);
 }
 
