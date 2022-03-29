@@ -6,18 +6,20 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/03/28 17:04:10 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/03/29 18:05:07 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <stdarg.h>
+#include <stdlib.h>
 
 /* chercher % et les remplacer par variable correspondante 
 	via conversions en char et strjoin*/
 
-size_t	ft_strlen(const char *s)
+int	ft_strlen(const char *s)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	if (!s)
@@ -27,24 +29,39 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_stradd(char *ret, char addon)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	int		size;
+	size_t	i;
+	void	*ptr;
 
-	size = ft_strlen(ret);
-	if (!ret)
-		ret = malloc(sizeof(char) * 2);
-	else
-		ret = malloc(sizeof(char) * (size + 1));
-	ret[size] = addon;
-	ret[size + 1] = '\0';
-	return (ret);
+	if (dest == NULL && src == NULL)
+		return (NULL);
+	ptr = dest;
+	i = 0;
+	while (i < n)
+	{
+		*(unsigned char *)(dest + i) = *(unsigned char *)(src + i);
+		i++;
+	}
+	return (ptr);
 }
 
-char	*ft_percent(char *str, char *tab, int i)
+char	*ft_charjoin(char *tab, char c)
 {
-	
-	return (tab);
+	char	*join;
+	int		i;
+	int		size;
+	char	*str;
+
+	i = 0;
+	size = ft_strlen(tab);
+	str = malloc(sizeof(char) * (size + 2));
+	str = ft_memcpy(str, tab, size);
+	if (!str)
+		return (NULL);
+	str[size] = c;
+	str[size + 1] = '\0';
+	return (str);
 }
 
 //tab : resultat affichable
@@ -52,49 +69,45 @@ int	ft_printf(const char *str, ...)
 {
 	int		i;
 	char	*tab;
-	va_list	arg;
 
-	i = 0;
 	tab = NULL;
-	if (!str)
-		return (NULL);
+	i = 0;
 	while (str[i])
 	{
-		if (str[i + 1] == 'c')
-			ft_joinchar
-		else if (str[i + 1] == 's')
-			ft_joinstr
-		else if (str[i + 1] == 'p')
-			ft_joinptr
-		else if (str[i + 1] == 'd')
-			ft_joinnbr
-		else if (str[i + 1] == 'i')
-			ft_joinnbr
-		else if (str[i + 1] == 'u')
-			ft_joinnbr
-		else if (str[i + 1] == 'x')
-			ft_joinhexamin
-		else if (str[i + 1] == 'X')
-			ft_joinhexamaj
-		else if (str[i + 1] == '%')//passe les deux '%'
-	{
-		tab = ft_stradd(tab, str[i])
-		i++;
+		while(str[i] && str[i] != '%')
+		{
+			tab = ft_charjoin(tab, str[i]);
+			i++;
+		}
 	}
-		else
-			tab = ft_stradd(tab, str[i])
-		i++;
-	}
-	ft_write(tab);
+	printf("%s", tab);
 	return (ft_strlen(tab));
 }
-
 
 int	main(void)
 {
 	// int	nbr = 4;
 
-	printf("manger des pates %r");
+	printf("%d", ft_printf("\nmanger des pates\n"));
 	return (0);
 }
-		
+
+// else if (str[i + 1] == 's')
+// 			ft_joinstr
+// 		else if (str[i + 1] == 'p')
+// 			ft_joinptr
+// 		else if (str[i + 1] == 'd')
+// 			ft_joinnbr
+// 		else if (str[i + 1] == 'i')
+// 			ft_joinnbr
+// 		else if (str[i + 1] == 'u')
+// 			ft_joinnbr
+// 		else if (str[i + 1] == 'x')
+// 			ft_joinhexamin
+// 		else if (str[i + 1] == 'X')
+// 			ft_joinhexamaj
+// 		else if (str[i + 1] == '%')//passe les deux '%'
+// 	{
+// 		tab = ft_stradd(tab, str[i])
+// 		i++;
+// 	}
