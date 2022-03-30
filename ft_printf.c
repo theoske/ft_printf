@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/03/29 18:41:12 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/03/30 11:02:20 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,11 @@ char	*ft_charjoin(char *tab, char c)
 	return (str);
 }
 
-char	*ft_printf_options(char *tab, char *str, int i)
+char	*ft_printf_options(char *tab, const char *str, int i, va_list ptr)
 {
-	
+	if (str[i + 1] == 'c')
+		tab = ft_charjoin(tab, va_arg(ptr, char));
+	return (tab);
 }
 
 //tab : resultat affichable
@@ -74,9 +76,11 @@ int	ft_printf(const char *str, ...)
 {
 	int		i;
 	char	*tab;
+	va_list	ptr;
 
 	tab = NULL;
 	i = 0;
+	va_start(ptr, str);
 	while (str[i])
 	{
 		while(str[i] && str[i] != '%')
@@ -86,10 +90,12 @@ int	ft_printf(const char *str, ...)
 		}
 		if (str[i] && str[i] == '%')
 		{
-			tab = ft_printf_options(tab, str, i);
+			tab = ft_printf_options(tab, str, i, ptr);
 			i++;
 		}
+		i++;
 	}
+	va_end(ptr);
 	printf("%s", tab);
 	return (ft_strlen(tab));
 }
@@ -97,8 +103,10 @@ int	ft_printf(const char *str, ...)
 int	main(void)
 {
 	// int	nbr = 4;
-
-	printf("%d", ft_printf("\nmanger des p%ates\n"));
+	char	c;
+	
+	c = 'F';
+	printf("%d", ft_printf("\nmanger des p%cates\n", c));
 	return (0);
 }
 
