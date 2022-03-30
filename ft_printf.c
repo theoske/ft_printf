@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/03/30 15:28:57 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/03/30 15:38:30 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ char	*ft_printf_options(char *tab, const char *str, int i, va_list ptr)
 		tab = ft_charjoin(tab, va_arg(ptr, int));
 	else if (str[i + 1] == 's')
 		tab = ft_strjoin(tab, va_arg(ptr, char *));
-	else if (str[i + 1] == 'd')
+	else if (str[i + 1] == 'd' || str[i + 1] == 'i')
 		tab = ft_itoa(va_arg(ptr, int), tab);
 	return (tab);
 }
@@ -221,7 +221,7 @@ int	main(void)
 	// int	nbr = 4;
 	char	c;
 	char	s[] = "pommes et des";
-	int		d = 6;
+	int		d = 200000;
 	
 	c = 'F';
 	ft_printf("\nmanger des %s p%cates %d fois par semaine\n", s, c, d);
