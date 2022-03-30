@@ -6,16 +6,29 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/03/30 11:02:20 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/03/30 11:23:47 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 /* chercher % et les remplacer par variable correspondante 
 	via conversions en char et strjoin*/
+
+void	ft_putstr(char *tab)
+{
+	int		i;
+
+	i = 0;
+	while (tab && tab[i])
+	{
+		write(1, &tab[i], 1);
+		i++;
+	}
+}
 
 int	ft_strlen(const char *s)
 {
@@ -96,7 +109,7 @@ int	ft_printf(const char *str, ...)
 		i++;
 	}
 	va_end(ptr);
-	printf("%s", tab);
+	ft_putstr(tab);
 	return (ft_strlen(tab));
 }
 
@@ -106,7 +119,7 @@ int	main(void)
 	char	c;
 	
 	c = 'F';
-	printf("%d", ft_printf("\nmanger des p%cates\n", c));
+	ft_printf("\nmanger des p%cates\n", c);
 	return (0);
 }
 
