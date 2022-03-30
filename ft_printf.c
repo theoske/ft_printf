@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/03/30 17:22:18 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/03/30 17:41:29 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ char	*ft_dectohex(char *tab, void *ptr)
 	char	*str;
 
 	quotient = &ptr;
-	// printf("\n%d\n\n", &ptr);
+	printf("\n%zu\n\n", &ptr);//
 	temp = 0;
 	while (quotient != 0)
 	{
@@ -247,9 +247,11 @@ int	main(void)
 	char	c;
 	char	s[] = "pommes et des";
 	int		d = 200000;
-	
+	int		*ptr;
+
+	ptr = &d;	
 	c = 'F';
-	printf("%p", &d);
-	ft_printf("\nmanger des %s p%cates %d fois par semaine %p\n", s, c, d, &d);
+	printf("%zu", &ptr);//
+	ft_printf("\nmanger des %s p%cates %d fois par semaine %p\n", s, c, d, ptr);
 	return (0);
 }
