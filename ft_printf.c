@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/03/30 15:38:30 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/03/30 17:21:50 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,29 @@ char	*ft_itoa(int n, char *str)
 	return (tab);
 }
 
+char	*ft_dectohex(char *tab, void *ptr)
+{
+	int		temp;
+	int		quotient;
+	char	*str;
+
+	quotient = &ptr;
+	// printf("\n%d\n\n", &ptr);
+	temp = 0;
+	while (quotient != 0)
+	{
+		temp = quotient % 16;
+		if (temp < 10)
+			temp = temp + 48; 
+		else
+			temp = temp + 97;
+		str = ft_charjoin(str, temp);
+		quotient = quotient / 16;
+	}
+	tab = ft_strjoin(tab, str);
+	return (tab);
+}
+
 char	*ft_printf_options(char *tab, const char *str, int i, va_list ptr)
 {
 	if (str[i + 1] == 'c')
@@ -184,6 +207,8 @@ char	*ft_printf_options(char *tab, const char *str, int i, va_list ptr)
 		tab = ft_strjoin(tab, va_arg(ptr, char *));
 	else if (str[i + 1] == 'd' || str[i + 1] == 'i')
 		tab = ft_itoa(va_arg(ptr, int), tab);
+	else if (str[i + 1] == 'p')
+		tab = ft_dectohex(tab, va_arg(ptr, void *));
 	return (tab);
 }
 
@@ -224,6 +249,7 @@ int	main(void)
 	int		d = 200000;
 	
 	c = 'F';
-	ft_printf("\nmanger des %s p%cates %d fois par semaine\n", s, c, d);
+	printf("%p", &d);
+	ft_printf("\nmanger des %s p%cates %d fois par semaine %p\n", s, c, d, &d);
 	return (0);
 }
