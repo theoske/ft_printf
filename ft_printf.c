@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/03/30 17:21:50 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/03/30 17:22:18 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ char	*ft_dectohex(char *tab, void *ptr)
 		if (temp < 10)
 			temp = temp + 48; 
 		else
-			temp = temp + 97;
+			temp = temp + 55;
 		str = ft_charjoin(str, temp);
 		quotient = quotient / 16;
 	}
