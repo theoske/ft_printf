@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/03/30 17:41:29 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/03/31 18:04:32 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 
 char	*ft_charjoin(char *tab, char c)
 {
-	char	*join;
 	int		i;
 	int		size;
 	char	*str;
@@ -176,26 +175,63 @@ char	*ft_itoa(int n, char *str)
 	return (tab);
 }
 
-char	*ft_dectohex(char *tab, void *ptr)
+char	*ft_dectohex(char *tab, int nbr)
 {
 	int		temp;
-	int		quotient;
+	int		i;
 	char	*str;
+	char	*strrev;
 
-	quotient = &ptr;
-	printf("\n%zu\n\n", &ptr);//
 	temp = 0;
-	while (quotient != 0)
+	str = NULL;
+	strrev = NULL;
+	while (nbr != 0)
 	{
-		temp = quotient % 16;
+		temp = nbr % 16;
 		if (temp < 10)
-			temp = temp + 48; 
+			temp = temp + 48;
+		else
+			temp = temp + 87;
+		str = ft_charjoin(str, (char)temp);
+		nbr = nbr / 16;
+	}
+	i = ft_strlen(str) - 1;
+	while (i >= 0)
+	{
+		strrev = ft_charjoin(strrev, str[i]);
+		i--;
+	}
+	tab = ft_strjoin(tab, strrev);
+	return (tab);
+}
+
+char	*ft_dectobighex(char *tab, int nbr)
+{
+	int		temp;
+	int		i;
+	char	*str;
+	char	*strrev;
+
+	temp = 0;
+	str = NULL;
+	strrev = NULL;
+	while (nbr != 0)
+	{
+		temp = nbr % 16;
+		if (temp < 10)
+			temp = temp + 48;
 		else
 			temp = temp + 55;
-		str = ft_charjoin(str, temp);
-		quotient = quotient / 16;
+		str = ft_charjoin(str, (char)temp);
+		nbr = nbr / 16;
 	}
-	tab = ft_strjoin(tab, str);
+	i = ft_strlen(str) - 1;
+	while (i >= 0)
+	{
+		strrev = ft_charjoin(strrev, str[i]);
+		i--;
+	}
+	tab = ft_strjoin(tab, strrev);
 	return (tab);
 }
 
@@ -207,8 +243,10 @@ char	*ft_printf_options(char *tab, const char *str, int i, va_list ptr)
 		tab = ft_strjoin(tab, va_arg(ptr, char *));
 	else if (str[i + 1] == 'd' || str[i + 1] == 'i')
 		tab = ft_itoa(va_arg(ptr, int), tab);
-	else if (str[i + 1] == 'p')
-		tab = ft_dectohex(tab, va_arg(ptr, void *));
+	else if (str[i + 1] == 'x')
+		tab = ft_dectohex(tab, va_arg(ptr, int));
+	else if (str[i + 1] == 'X')
+		tab = ft_dectobighex(tab, va_arg(ptr, int));
 	return (tab);
 }
 
@@ -243,7 +281,6 @@ int	ft_printf(const char *str, ...)
 
 int	main(void)
 {
-	// int	nbr = 4;
 	char	c;
 	char	s[] = "pommes et des";
 	int		d = 200000;
@@ -251,7 +288,9 @@ int	main(void)
 
 	ptr = &d;	
 	c = 'F';
-	printf("%zu", &ptr);//
-	ft_printf("\nmanger des %s p%cates %d fois par semaine %p\n", s, c, d, ptr);
+	// printf("%p", ptr);
+	d = ft_printf("\nmanger des%sp%cates%xfoisparsemaine%X%d\n", s, c, d, d, d);
+	// printf("\n %x \n", 200000);
 	return (0);
 }
+// manger despommes et despFates30d40foisparsemaine30D40200000
