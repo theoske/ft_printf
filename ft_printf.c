@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/03/31 18:04:32 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/01 14:55:23 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*ft_charjoin(char *tab, char c)
 
 	i = 0;
 	size = ft_strlen(tab);
-	str = malloc(sizeof(char) * (size + 2));
+	str = malloc(sizeof(char) * (size + 1));
 	str = ft_memcpy(str, tab, size);
 	if (!str)
 		return (NULL);
@@ -106,10 +106,10 @@ char	*ft_strdup(const char *s)
 {
 	char	*cpy;
 
-	cpy = malloc(ft_strlen(s) * sizeof(char) + 1);
+	cpy = malloc(ft_strlen(s) * sizeof(char));
 	if (!cpy)
 		return (0);
-	ft_memcpy(cpy, s, ft_strlen(s) * sizeof(char) + 1);
+	ft_memcpy(cpy, s, ft_strlen(s) * sizeof(char));
 	return (cpy);
 }
 
@@ -255,9 +255,11 @@ int	ft_printf(const char *str, ...)
 {
 	int		i;
 	char	*tab;
+	char	*tab2;
 	va_list	ptr;
 
 	tab = NULL;
+	tab2 = NULL;
 	i = 0;
 	va_start(ptr, str);
 	while (str[i])
@@ -272,7 +274,8 @@ int	ft_printf(const char *str, ...)
 			tab = ft_printf_options(tab, str, i, ptr);
 			i++;
 		}
-		i++;
+		if (str[i])
+			i++;
 	}
 	va_end(ptr);
 	ft_putstr(tab);
@@ -289,8 +292,8 @@ int	main(void)
 	ptr = &d;	
 	c = 'F';
 	// printf("%p", ptr);
-	d = ft_printf("\nmanger des%sp%cates%xfoisparsemaine%X%d\n", s, c, d, d, d);
-	// printf("\n %x \n", 200000);
+	d = ft_printf("\nmanger des %c %s %i %x aaaaa\n", c, s, d, d);
+	printf("\n %x \n", 200000);
 	return (0);
 }
 // manger despommes et despFates30d40foisparsemaine30D40200000
