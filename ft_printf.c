@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/01 14:55:23 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/01 15:45:40 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,21 @@ char	*ft_dectobighex(char *tab, int nbr)
 	return (tab);
 }
 
+char	*ft_percent(char *tab, const char *str, int i)
+{
+	//c s p d i u x X
+	char	c;
+
+	tab = ft_charjoin(tab, '%');
+	// if (!str[i + 2])
+	// 	return (tab);
+	c = str[i + 2];
+	if (c == 99 || c == 115 || c == 112 || c == 100 
+		|| c == 105 || c == 117 || c == 120 || c == 88)
+		tab = ft_charjoin(tab, c);
+	return (tab);
+}
+
 char	*ft_printf_options(char *tab, const char *str, int i, va_list ptr)
 {
 	if (str[i + 1] == 'c')
@@ -247,6 +262,8 @@ char	*ft_printf_options(char *tab, const char *str, int i, va_list ptr)
 		tab = ft_dectohex(tab, va_arg(ptr, int));
 	else if (str[i + 1] == 'X')
 		tab = ft_dectobighex(tab, va_arg(ptr, int));
+	else if (str[i + 1] == '%')
+		tab = ft_percent(tab, str, i);
 	return (tab);
 }
 
@@ -272,6 +289,8 @@ int	ft_printf(const char *str, ...)
 		if (str[i] && str[i] == '%')
 		{
 			tab = ft_printf_options(tab, str, i, ptr);
+			// if (str[i + 1] == '%') // segfault ici
+			// 	i++;
 			i++;
 		}
 		if (str[i])
@@ -292,7 +311,7 @@ int	main(void)
 	ptr = &d;	
 	c = 'F';
 	// printf("%p", ptr);
-	d = ft_printf("\nmanger des %c %s %i %x aaaaa\n", c, s, d, d);
+	d = ft_printf("\nmanger de %% s %c %s %i %x aaa%Xaa\n", c, s, d, d, d);
 	printf("\n %x \n", 200000);
 	return (0);
 }
