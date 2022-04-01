@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/01 17:21:49 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/01 17:23:52 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,7 +311,7 @@ int	main(void)
 	ptr = &d;	
 	c = 'F';
 	// printf("%p", ptr);
-	d = ft_printf("\nmanger de %%c %c %s %i %x aaaaa\n",c, s, d, d);
+	d = ft_printf("\nmanger de %%%c %c %s %i %x aaaaa\n", c, c, s, d, d);
 	printf("\n %x \n", 200000);
 	return (0);
 }
