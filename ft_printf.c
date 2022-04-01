@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/01 15:45:40 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/01 17:18:13 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*ft_charjoin(char *tab, char c)
 
 	i = 0;
 	size = ft_strlen(tab);
-	str = malloc(sizeof(char) * (size + 1));
+	str = malloc(sizeof(char) * (size + 2));
 	str = ft_memcpy(str, tab, size);
 	if (!str)
 		return (NULL);
@@ -237,12 +237,9 @@ char	*ft_dectobighex(char *tab, int nbr)
 
 char	*ft_percent(char *tab, const char *str, int i)
 {
-	//c s p d i u x X
 	char	c;
 
 	tab = ft_charjoin(tab, '%');
-	// if (!str[i + 2])
-	// 	return (tab);
 	c = str[i + 2];
 	if (c == 99 || c == 115 || c == 112 || c == 100 
 		|| c == 105 || c == 117 || c == 120 || c == 88)
@@ -289,8 +286,8 @@ int	ft_printf(const char *str, ...)
 		if (str[i] && str[i] == '%')
 		{
 			tab = ft_printf_options(tab, str, i, ptr);
-			// if (str[i + 1] == '%') // segfault ici
-			// 	i++;
+			if (str[i + 1] && str[i + 1] == '%')
+				i++;
 			i++;
 		}
 		if (str[i])
@@ -311,7 +308,7 @@ int	main(void)
 	ptr = &d;	
 	c = 'F';
 	// printf("%p", ptr);
-	d = ft_printf("\nmanger de %% s %c %s %i %x aaa%Xaa\n", c, s, d, d, d);
+	d = ft_printf("\nmanger de %% c %c %s %i %x aaaaa\n",c, s, d, d);// enleve espace apres %% tout le temps
 	printf("\n %x \n", 200000);
 	return (0);
 }
