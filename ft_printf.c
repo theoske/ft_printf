@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/01 17:18:13 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/01 17:21:49 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,7 +288,10 @@ int	ft_printf(const char *str, ...)
 			tab = ft_printf_options(tab, str, i, ptr);
 			if (str[i + 1] && str[i + 1] == '%')
 				i++;
-			i++;
+			if (str[i + 1] == 99 || str[i + 1] == 115 || str[i + 1] == 112 
+				|| str[i + 1] == 100 || str[i + 1] == 105 || str[i + 1] == 117 
+				|| str[i + 1] == 120 || str[i + 1] == 88)
+				i++;
 		}
 		if (str[i])
 			i++;
@@ -308,7 +311,7 @@ int	main(void)
 	ptr = &d;	
 	c = 'F';
 	// printf("%p", ptr);
-	d = ft_printf("\nmanger de %% c %c %s %i %x aaaaa\n",c, s, d, d);// enleve espace apres %% tout le temps
+	d = ft_printf("\nmanger de %%c %c %s %i %x aaaaa\n",c, s, d, d);
 	printf("\n %x \n", 200000);
 	return (0);
 }
