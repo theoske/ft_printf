@@ -6,14 +6,14 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/04 16:02:24 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/04 16:36:01 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include <stdarg.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "printf.h"
 
 /* chercher % et les remplacer par variable correspondante 
 	via conversions en char et strjoin*/
@@ -177,7 +177,7 @@ char	*ft_itoa(int n, char *str)
 
 char	*ft_unitoa(unsigned int n, char *str)
 {
-	char		*tab;
+	char			*tab;
 	unsigned int	i;
 	unsigned int	j;
 	unsigned int	numbers;
@@ -220,12 +220,9 @@ char	*ft_dectohex(char *tab, int nbr)
 		str = ft_charjoin(str, (char)temp);
 		nbr = nbr / 16;
 	}
-	i = ft_strlen(str) - 1;
-	while (i >= 0)
-	{
+	i = ft_strlen(str);
+	while (i-- >= 0)
 		strrev = ft_charjoin(strrev, str[i]);
-		i--;
-	}
 	tab = ft_strjoin(tab, strrev);
 	return (tab);
 }
@@ -251,11 +248,8 @@ char	*ft_dectobighex(char *tab, int nbr)
 		nbr = nbr / 16;
 	}
 	i = ft_strlen(str) - 1;
-	while (i >= 0)
-	{
+	while (i-- >= 0)
 		strrev = ft_charjoin(strrev, str[i]);
-		i--;
-	}
 	tab = ft_strjoin(tab, strrev);
 	return (tab);
 }
@@ -266,7 +260,7 @@ char	*ft_percent(char *tab, const char *str, int i)
 
 	tab = ft_charjoin(tab, '%');
 	c = str[i + 2];
-	if (c == 99 || c == 115 || c == 112 || c == 100 
+	if (c == 99 || c == 115 || c == 112 || c == 100
 		|| c == 105 || c == 117 || c == 120 || c == 88)
 		tab = ft_charjoin(tab, c);
 	return (tab);
@@ -276,8 +270,8 @@ char	*ft_ptr(char *tab, unsigned long int nbr)
 {
 	long int		temp;
 	long int		i;
-	char	*str;
-	char	*strrev;
+	char			*str;
+	char			*strrev;
 
 	temp = 0;
 	str = NULL;
@@ -293,11 +287,8 @@ char	*ft_ptr(char *tab, unsigned long int nbr)
 		nbr = nbr / 16;
 	}
 	i = ft_strlen(str) - 1;
-	while (i >= 0)
-	{
+	while (i-- >= 0)
 		strrev = ft_charjoin(strrev, str[i]);
-		i--;
-	}
 	tab = ft_strjoin(tab, "0x");
 	return (ft_strjoin(tab, strrev));
 }
@@ -323,21 +314,28 @@ char	*ft_printf_options(char *tab, const char *str, int i, va_list ptr)
 	return (tab);
 }
 
-//tab : resultat affichable
+int	ft_printf2(int i, const char *str)
+{
+	if (str[i + 1] && str[i + 1] == '%')
+		i++;
+	if (str[i + 1] == 99 || str[i + 1] == 115 || str[i + 1] == 112
+		|| str[i + 1] == 100 || str[i + 1] == 105 || str[i + 1] == 117
+		|| str[i + 1] == 120 || str[i + 1] == 88)
+		i++;
+	return (i);
+}
+
 int	ft_printf(const char *str, ...)
 {
 	int		i;
 	char	*tab;
-	char	*tab2;
 	va_list	ptr;
 
-	tab = NULL;
-	tab2 = NULL;
 	i = 0;
 	va_start(ptr, str);
 	while (str[i])
 	{
-		while(str[i] && str[i] != '%')
+		while (str[i] && str[i] != '%')
 		{
 			tab = ft_charjoin(tab, str[i]);
 			i++;
@@ -345,12 +343,7 @@ int	ft_printf(const char *str, ...)
 		if (str[i] && str[i] == '%')
 		{
 			tab = ft_printf_options(tab, str, i, ptr);
-			if (str[i + 1] && str[i + 1] == '%')
-				i++;
-			if (str[i + 1] == 99 || str[i + 1] == 115 || str[i + 1] == 112 
-				|| str[i + 1] == 100 || str[i + 1] == 105 || str[i + 1] == 117 
-				|| str[i + 1] == 120 || str[i + 1] == 88)
-				i++;
+			i = ft_printf2(i, str);
 		}
 		if (str[i])
 			i++;
@@ -360,18 +353,18 @@ int	ft_printf(const char *str, ...)
 	return (ft_strlen(tab));
 }
 
-int	main(void)
-{
-	char	c;
-	char	s[] = "pommes et des";
-	int		d = 200000;
-	int		*ptr;
+// int	main(void)
+// {
+// 	char	c;
+// 	char	s[] = "pommes et des";
+// 	int		d = 200000;
+// 	int		*ptr;
 
-	ptr = &d;	
-	c = 'F';
-	// printf("%p", ptr);
-	d = ft_printf("manger de %p",ptr);
-	printf("\n %p \n", ptr);
-	return (0);
-}
+// 	ptr = &d;	
+// 	c = 'F';
+// 	// printf("%p", ptr);
+// 	d = ft_printf("manger de %p",ptr);
+// 	printf("\n %p \n", ptr);
+// 	return (0);
+// }
 // manger despommes et despFates30d40foisparsemaine30D40200000
