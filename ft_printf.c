@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/04 16:36:01 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/04 19:17:53 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,7 +247,7 @@ char	*ft_dectobighex(char *tab, int nbr)
 		str = ft_charjoin(str, (char)temp);
 		nbr = nbr / 16;
 	}
-	i = ft_strlen(str) - 1;
+	i = ft_strlen(str);
 	while (i-- >= 0)
 		strrev = ft_charjoin(strrev, str[i]);
 	tab = ft_strjoin(tab, strrev);
@@ -332,6 +332,7 @@ int	ft_printf(const char *str, ...)
 	va_list	ptr;
 
 	i = 0;
+	tab = NULL;
 	va_start(ptr, str);
 	while (str[i])
 	{
@@ -350,7 +351,9 @@ int	ft_printf(const char *str, ...)
 	}
 	va_end(ptr);
 	ft_putstr(tab);
-	return (ft_strlen(tab));
+	i = ft_strlen(tab);
+	free (tab);
+	return (i);
 }
 
 // int	main(void)
@@ -363,8 +366,10 @@ int	ft_printf(const char *str, ...)
 // 	ptr = &d;	
 // 	c = 'F';
 // 	// printf("%p", ptr);
-// 	d = ft_printf("manger de %p",ptr);
-// 	printf("\n %p \n", ptr);
+// 	d = ft_printf("%p", ptr);
+// 	ft_printf("\n%d", d);
+// 	ft_printf("\n%d", d);
+// 	// printf("\n %p \n", ptr);
 // 	return (0);
 // }
 // manger despommes et despFates30d40foisparsemaine30D40200000
