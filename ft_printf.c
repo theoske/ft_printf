@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/01 17:23:52 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/04 15:28:24 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,31 @@ char	*ft_itoa(int n, char *str)
 	return (tab);
 }
 
+char	*ft_unitoa(unsigned int n, char *str)
+{
+	char		*tab;
+	unsigned int	i;
+	unsigned int	j;
+	unsigned int	numbers;
+
+	i = 0;
+	numbers = ft_numbers((long int)n);
+	tab = malloc(sizeof(char) * numbers);
+	if (!tab)
+		return (NULL);
+	if (n < 0)
+	{
+		tab[i] = '-';
+		i++;
+		n *= -1;
+	}
+	j = numbers - 2;
+	tab[numbers - 1] = '\0';
+	tab = filling((long int)n, tab, j, numbers);
+	tab = ft_strjoin(str, tab);
+	return (tab);
+}
+
 char	*ft_dectohex(char *tab, int nbr)
 {
 	int		temp;
@@ -255,6 +280,8 @@ char	*ft_printf_options(char *tab, const char *str, int i, va_list ptr)
 		tab = ft_strjoin(tab, va_arg(ptr, char *));
 	else if (str[i + 1] == 'd' || str[i + 1] == 'i')
 		tab = ft_itoa(va_arg(ptr, int), tab);
+	else if (str[i + 1] == 'u')
+		tab = ft_unitoa(va_arg(ptr, unsigned int), tab);
 	else if (str[i + 1] == 'x')
 		tab = ft_dectohex(tab, va_arg(ptr, int));
 	else if (str[i + 1] == 'X')
@@ -311,8 +338,8 @@ int	main(void)
 	ptr = &d;	
 	c = 'F';
 	// printf("%p", ptr);
-	d = ft_printf("\nmanger de %%%c %c %s %i %x aaaaa\n", c, c, s, d, d);
-	printf("\n %x \n", 200000);
+	d = ft_printf("manger de %u", 4294967295);
+	// printf("\n %x \n", 200000);
 	return (0);
 }
 // manger despommes et despFates30d40foisparsemaine30D40200000
