@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/04 15:28:24 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/04 16:02:24 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,12 +272,44 @@ char	*ft_percent(char *tab, const char *str, int i)
 	return (tab);
 }
 
+char	*ft_ptr(char *tab, unsigned long int nbr)
+{
+	long int		temp;
+	long int		i;
+	char	*str;
+	char	*strrev;
+
+	temp = 0;
+	str = NULL;
+	strrev = NULL;
+	while (nbr != 0)
+	{
+		temp = nbr % 16;
+		if (temp < 10)
+			temp = temp + 48;
+		else
+			temp = temp + 87;
+		str = ft_charjoin(str, (char)temp);
+		nbr = nbr / 16;
+	}
+	i = ft_strlen(str) - 1;
+	while (i >= 0)
+	{
+		strrev = ft_charjoin(strrev, str[i]);
+		i--;
+	}
+	tab = ft_strjoin(tab, "0x");
+	return (ft_strjoin(tab, strrev));
+}
+
 char	*ft_printf_options(char *tab, const char *str, int i, va_list ptr)
 {
 	if (str[i + 1] == 'c')
 		tab = ft_charjoin(tab, va_arg(ptr, int));
 	else if (str[i + 1] == 's')
 		tab = ft_strjoin(tab, va_arg(ptr, char *));
+	else if (str[i + 1] == 'p')
+		tab = ft_ptr(tab, va_arg(ptr, unsigned long int));
 	else if (str[i + 1] == 'd' || str[i + 1] == 'i')
 		tab = ft_itoa(va_arg(ptr, int), tab);
 	else if (str[i + 1] == 'u')
@@ -338,8 +370,8 @@ int	main(void)
 	ptr = &d;	
 	c = 'F';
 	// printf("%p", ptr);
-	d = ft_printf("manger de %u", 4294967295);
-	// printf("\n %x \n", 200000);
+	d = ft_printf("manger de %p",ptr);
+	printf("\n %p \n", ptr);
 	return (0);
 }
 // manger despommes et despFates30d40foisparsemaine30D40200000
