@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/05 11:32:23 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/05 14:49:14 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,19 +294,13 @@ char	*ft_ptr(char *tab, unsigned long int nbr)
 	return (ft_strjoin(tab, strrev));
 }
 
-char	*ft_printf_options(char *tab, const char *str, int i, va_list ptr)
+char	*ft_printf_options(char *tab, const char *str, int *ptri, va_list ptr)
 {
-	char	c;
+	int		i;
 
+	i = *ptri;
 	if (str[i + 1] == 'c')
-	{
-		c = va_arg(ptr, int);
-		tab = ft_charjoin(tab, c);
-		if (c == 0)
-		{
-			
-		}
-	}
+		tab = ft_charjoin(tab, va_arg(ptr, int));
 	else if (str[i + 1] == 's')
 		tab = ft_strjoin(tab, va_arg(ptr, char *));
 	else if (str[i + 1] == 'p')
@@ -344,7 +338,7 @@ int	ft_printf(const char *str, ...)
 	i = 0;
 	tab = NULL;
 	va_start(ptr, str);
-	while (str[i])
+	while (i >= 0 && str[i])
 	{
 		while (str[i] && str[i] != '%')
 		{
@@ -353,7 +347,7 @@ int	ft_printf(const char *str, ...)
 		}
 		if (str[i] && str[i] == '%')
 		{
-			tab = ft_printf_options(tab, str, i, ptr);
+			tab = ft_printf_options(tab, str, &i, ptr);
 			i = ft_printf2(i, str);
 		}
 		if (str[i])
@@ -366,21 +360,21 @@ int	ft_printf(const char *str, ...)
 	return (i);
 }
 
-int	main(void)
-{
-	char	c;
-	char	s[] = "pommes et des";
-	int		d = 200000;
-	int		*ptr;
+// int	main(void)
+// {
+// 	char	c;
+// 	char	s[] = "pommes et des";
+// 	int		d = 200000;
+// 	int		*ptr;
 
-	ptr = &d;	
-	c = 'F';
-	// printf("%p", ptr);
-	ft_printf(" %c %c %c ", 0, '1', '2');
-	printf("\n aa%caaa %c %c ", 0, '1', '2');
-	// ft_printf("\n%d", d);
-	// ft_printf("\n%d", d);
-	// printf("\n %p \n", ptr);
-	return (0);
-}
+// 	ptr = &d;	
+// 	c = 'F';
+// 	// printf("%p", ptr);
+// 	ft_printf(" %c %c %c ", 0, '1', '2');
+// 	printf("\n aa%caaa %c %c ", 0, '1', '2');
+// 	// ft_printf("\n%d", d);
+// 	// ft_printf("\n%d", d);
+// 	// printf("\n %p \n", ptr);
+// 	return (0);
+// }
 // manger despommes et despFates30d40foisparsemaine30D40200000
