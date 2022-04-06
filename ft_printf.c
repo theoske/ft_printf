@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/06 11:49:47 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/06 13:19:54 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	j = 0;
 	i = 0;
+	if (!s2)
+		s2 = "(null)";
 	join = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!join)
 		return (NULL);
@@ -60,7 +62,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		join[i] = *(char *)(s1 + i);
 		i++;
 	}
-	while (s2[j])
+	while (s2 && s2[j])
 	{
 		join[i + j] = *(char *)(s2 + j);
 		j++;
@@ -381,8 +383,8 @@ int	ft_printf(const char *str, ...)
 // 	ptr = &d;	
 // 	c = 'F';
 // 	// printf("%p", ptr);
-// 	d = ft_printf("\n aa%caaa %c %c ", 0, '1', '2');
-// 	// e = printf("\n aa%caaa %c %c ", 0, '1', '2');
+// 	d = ft_printf(" NULL %s NULL ", NULL);
+// 	// e = printf(" NULL %s NULL ", NULL);
 // 	// write(1, "\n", 2);
 // 	// write(1, d, 2);
 // 	// write(1, "\n", 2);
