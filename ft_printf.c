@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/05 14:49:14 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/06 11:49:47 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,16 @@
 
 void	ft_putstr(char *tab)
 {
-	int		i;
+	int			i;
+	static int	once = 0;
 
 	i = 0;
-	while (tab && tab[i])
+	while (once == 0 && tab && tab[i])
 	{
 		write(1, &tab[i], 1);
 		i++;
 	}
+	once++;
 }
 
 int	ft_strlen(const char *s)
@@ -87,11 +89,19 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 
 char	*ft_charjoin(char *tab, char c)
 {
-	int		i;
-	int		size;
-	char	*str;
+	int			i;
+	int			size;
+	static int	zero = 0;
+	char		*str;
 
 	i = 0;
+	if (c == 0)
+	{
+		zero++;
+		c = 'F';
+	}
+	if (zero > 0)
+		ft_putstr(tab);
 	size = ft_strlen(tab);
 	str = malloc(sizeof(char) * (size + 2));
 	str = ft_memcpy(str, tab, size);
@@ -365,15 +375,18 @@ int	ft_printf(const char *str, ...)
 // 	char	c;
 // 	char	s[] = "pommes et des";
 // 	int		d = 200000;
+// 	int		e;
 // 	int		*ptr;
 
 // 	ptr = &d;	
 // 	c = 'F';
 // 	// printf("%p", ptr);
-// 	ft_printf(" %c %c %c ", 0, '1', '2');
-// 	printf("\n aa%caaa %c %c ", 0, '1', '2');
-// 	// ft_printf("\n%d", d);
-// 	// ft_printf("\n%d", d);
+// 	d = ft_printf("\n aa%caaa %c %c ", 0, '1', '2');
+// 	// e = printf("\n aa%caaa %c %c ", 0, '1', '2');
+// 	// write(1, "\n", 2);
+// 	// write(1, d, 2);
+// 	// write(1, "\n", 2);
+// 	// write(1, e, 2);
 // 	// printf("\n %p \n", ptr);
 // 	return (0);
 // }
