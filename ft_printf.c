@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/06 15:18:53 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/06 15:41:45 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 /* chercher % et les remplacer par variable correspondante 
 	via conversions en char et strjoin*/
 
-void	ft_putstr(char *tab)
+void	ft_putstr(char *tab)// se fait appeler deux fois
 {
 	int			i;
 	static int	once = 0;
@@ -104,6 +104,24 @@ char	*ft_charjoin(char *tab, char c)
 	}
 	if (zero > 0)
 		ft_putstr(tab);
+	size = ft_strlen(tab);
+	str = malloc(sizeof(char) * (size + 2));
+	str = ft_memcpy(str, tab, size);
+	if (!str)
+		return (NULL);
+	str[size] = c;
+	str[size + 1] = '\0';
+	free(tab);
+	return (str);
+}
+
+char	*ft_charjoin2(char *tab, char c)
+{
+	int			i;
+	int			size;
+	char		*str;
+
+	i = 0;
 	size = ft_strlen(tab);
 	str = malloc(sizeof(char) * (size + 2));
 	str = ft_memcpy(str, tab, size);
@@ -230,13 +248,15 @@ char	*ft_dectohex(char *tab, long long int nbr)
 			temp = temp + 48;
 		else
 			temp = temp + 87;
-		str = ft_charjoin(str, (char)temp);
+		str = ft_charjoin2(str, (char)temp);
 		nbr = nbr / 16;
 	}
 	i = ft_strlen(str);
 	while (i-- >= 0)
-		strrev = ft_charjoin(strrev, str[i]);
+		strrev = ft_charjoin2(strrev, str[i]);
 	tab = ft_strjoin(tab, strrev);
+	free (str);
+	free (strrev);
 	return (tab);
 }
 
@@ -264,6 +284,8 @@ char	*ft_dectobighex(char *tab, int nbr)
 	while (i-- >= 0)
 		strrev = ft_charjoin(strrev, str[i]);
 	tab = ft_strjoin(tab, strrev);
+	free (str);
+	free (strrev);
 	return (tab);
 }
 
@@ -352,24 +374,24 @@ int	ft_printf(const char *str, ...)
 	return (i);
 }
 
-int	main(void)
-{
-	char	c;
-	char	s[] = "pommes et des";
-	int		d = 200000;
-	int		e;
-	int		*ptr;
+// int	main(void)
+// {
+// 	char	c;
+// 	char	s[] = "pommes et des";
+// 	int		d = 200000;
+// 	int		e;
+// 	int		*ptr;
 
-	ptr = &d;	
-	c = 'F';
-	// printf("%p", ptr);
-	ft_printf("%p", ptr);
-	// e = printf("\n %p %p ", ptr, ptr);
-	// write(1, "\n", 2);
-	// write(1, d, 2);
-	// write(1, "\n", 2);
-	// write(1, e, 2);
-	// printf("\n %p \n", ptr);
-	return (0);
-}
+// 	ptr = &d;	
+// 	c = 'F';
+// 	// printf("%p", ptr);
+// 	ft_printf("%p", ptr);
+// 	// e = printf("\n %p %p ", ptr, ptr);
+// 	// write(1, "\n", 2);
+// 	// write(1, d, 2);
+// 	// write(1, "\n", 2);
+// 	// write(1, e, 2);
+// 	// printf("\n %p \n", ptr);
+// 	return (0);
+// }
 // manger despommes et despFates30d40foisparsemaine30D40200000
