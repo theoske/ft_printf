@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/06 13:19:54 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/06 15:18:53 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ char	*ft_unitoa(unsigned int n, char *str)
 	return (tab);
 }
 
-char	*ft_dectohex(char *tab, int nbr)
+char	*ft_dectohex(char *tab, long long int nbr)
 {
 	int		temp;
 	int		i;
@@ -273,37 +273,17 @@ char	*ft_percent(char *tab, const char *str, int i)
 
 	tab = ft_charjoin(tab, '%');
 	c = str[i + 2];
-	if (c == 99 || c == 115 || c == 112 || c == 100
-		|| c == 105 || c == 117 || c == 120 || c == 88)
+	if (c == 'c' || c == 's' || c == 'p' || c == 'x'
+		|| c == 'X' || c == 'i' || c == 'u' || c == '%')
 		tab = ft_charjoin(tab, c);
 	return (tab);
 }
 
 char	*ft_ptr(char *tab, unsigned long int nbr)
 {
-	long int		temp;
-	long int		i;
-	char			*str;
-	char			*strrev;
-
-	temp = 0;
-	str = NULL;
-	strrev = NULL;
-	while (nbr != 0)
-	{
-		temp = nbr % 16;
-		if (temp < 10)
-			temp = temp + 48;
-		else
-			temp = temp + 87;
-		str = ft_charjoin(str, (char)temp);
-		nbr = nbr / 16;
-	}
-	i = ft_strlen(str) - 1;
-	while (i-- >= 0)
-		strrev = ft_charjoin(strrev, str[i]);
 	tab = ft_strjoin(tab, "0x");
-	return (ft_strjoin(tab, strrev));
+	tab = ft_dectohex(tab, nbr);
+	return (tab);
 }
 
 char	*ft_printf_options(char *tab, const char *str, int *ptri, va_list ptr)
@@ -372,24 +352,24 @@ int	ft_printf(const char *str, ...)
 	return (i);
 }
 
-// int	main(void)
-// {
-// 	char	c;
-// 	char	s[] = "pommes et des";
-// 	int		d = 200000;
-// 	int		e;
-// 	int		*ptr;
+int	main(void)
+{
+	char	c;
+	char	s[] = "pommes et des";
+	int		d = 200000;
+	int		e;
+	int		*ptr;
 
-// 	ptr = &d;	
-// 	c = 'F';
-// 	// printf("%p", ptr);
-// 	d = ft_printf(" NULL %s NULL ", NULL);
-// 	// e = printf(" NULL %s NULL ", NULL);
-// 	// write(1, "\n", 2);
-// 	// write(1, d, 2);
-// 	// write(1, "\n", 2);
-// 	// write(1, e, 2);
-// 	// printf("\n %p \n", ptr);
-// 	return (0);
-// }
+	ptr = &d;	
+	c = 'F';
+	// printf("%p", ptr);
+	ft_printf("%p", ptr);
+	// e = printf("\n %p %p ", ptr, ptr);
+	// write(1, "\n", 2);
+	// write(1, d, 2);
+	// write(1, "\n", 2);
+	// write(1, e, 2);
+	// printf("\n %p \n", ptr);
+	return (0);
+}
 // manger despommes et despFates30d40foisparsemaine30D40200000
