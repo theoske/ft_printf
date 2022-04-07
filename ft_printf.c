@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/06 15:41:45 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/07 14:04:10 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,7 +252,7 @@ char	*ft_dectohex(char *tab, long long int nbr)
 		nbr = nbr / 16;
 	}
 	i = ft_strlen(str);
-	while (i-- >= 0)
+	while (i-- > 0)
 		strrev = ft_charjoin2(strrev, str[i]);
 	tab = ft_strjoin(tab, strrev);
 	free (str);
@@ -260,7 +260,7 @@ char	*ft_dectohex(char *tab, long long int nbr)
 	return (tab);
 }
 
-char	*ft_dectobighex(char *tab, int nbr)
+char	*ft_dectobighex(char *tab, long int nbr)
 {
 	int		temp;
 	int		i;
@@ -281,7 +281,7 @@ char	*ft_dectobighex(char *tab, int nbr)
 		nbr = nbr / 16;
 	}
 	i = ft_strlen(str);
-	while (i-- >= 0)
+	while (i-- > 0)
 		strrev = ft_charjoin(strrev, str[i]);
 	tab = ft_strjoin(tab, strrev);
 	free (str);
@@ -301,10 +301,13 @@ char	*ft_percent(char *tab, const char *str, int i)
 	return (tab);
 }
 
-char	*ft_ptr(char *tab, unsigned long int nbr)
+char	*ft_ptr(char *tab, long long int nbr)
 {
 	tab = ft_strjoin(tab, "0x");
-	tab = ft_dectohex(tab, nbr);
+	if (nbr == -2147483648)
+		tab = ft_strjoin(tab, "ffffffff80000000");
+	else
+		tab = ft_dectohex(tab, nbr);
 	return (tab);
 }
 
@@ -385,8 +388,9 @@ int	ft_printf(const char *str, ...)
 // 	ptr = &d;	
 // 	c = 'F';
 // 	// printf("%p", ptr);
-// 	ft_printf("%p", ptr);
-// 	// e = printf("\n %p %p ", ptr, ptr);
+// 	d = ft_printf("\n %p %p ", -2147483648, 2147483646);
+// 	e = printf("\n %p %p ", -2147483648, 2147483646);
+// 	printf("\n\n%d %d ", d, e);
 // 	// write(1, "\n", 2);
 // 	// write(1, d, 2);
 // 	// write(1, "\n", 2);
@@ -394,4 +398,3 @@ int	ft_printf(const char *str, ...)
 // 	// printf("\n %p \n", ptr);
 // 	return (0);
 // }
-// manger despommes et despFates30d40foisparsemaine30D40200000
