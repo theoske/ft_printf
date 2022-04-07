@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 18:01:03 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/07 18:03:12 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/07 18:10:56 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,3 @@ char	*ft_itoa(int n, char *str)
 	free (tab);
 	return (str);
 }
-
