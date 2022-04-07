@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/07 15:43:25 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/07 15:45:36 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,8 +225,9 @@ char	*ft_unitoa(unsigned int n, char *str)
 	j = numbers - 2;
 	tab[numbers - 1] = '\0';
 	tab = filling((long int)n, tab, j, numbers);
-	tab = ft_strjoin(str, tab);
-	return (tab);
+	str = ft_strjoin(str, tab);
+	free (tab);
+	return (str);
 }
 
 char	*ft_dectohex(char *tab, unsigned long int nbr)
