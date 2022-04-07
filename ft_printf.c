@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/07 14:04:10 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/07 14:28:21 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,7 +231,7 @@ char	*ft_unitoa(unsigned int n, char *str)
 	return (tab);
 }
 
-char	*ft_dectohex(char *tab, long long int nbr)
+char	*ft_dectohex(char *tab, unsigned long int nbr)
 {
 	int		temp;
 	int		i;
@@ -301,13 +301,15 @@ char	*ft_percent(char *tab, const char *str, int i)
 	return (tab);
 }
 
-char	*ft_ptr(char *tab, long long int nbr)
+char	*ft_ptr(char *tab, unsigned long int nbr)
 {
 	tab = ft_strjoin(tab, "0x");
-	if (nbr == -2147483648)
-		tab = ft_strjoin(tab, "ffffffff80000000");
-	else
-		tab = ft_dectohex(tab, nbr);
+	if (nbr == 0)
+	{
+		tab = ft_strjoin(tab, "0");
+		return (tab);
+	}
+	tab = ft_dectohex(tab, nbr);
 	return (tab);
 }
 
@@ -377,6 +379,7 @@ int	ft_printf(const char *str, ...)
 	return (i);
 }
 
+
 // int	main(void)
 // {
 // 	char	c;
@@ -388,8 +391,8 @@ int	ft_printf(const char *str, ...)
 // 	ptr = &d;	
 // 	c = 'F';
 // 	// printf("%p", ptr);
-// 	d = ft_printf("\n %p %p ", -2147483648, 2147483646);
-// 	e = printf("\n %p %p ", -2147483648, 2147483646);
+// 	d = ft_printf("\n %p %p ", 0, 0);
+// 	e = printf("\n %p %p ", 0, 0);
 // 	printf("\n\n%d %d ", d, e);
 // 	// write(1, "\n", 2);
 // 	// write(1, d, 2);
@@ -398,3 +401,7 @@ int	ft_printf(const char *str, ...)
 // 	// printf("\n %p \n", ptr);
 // 	return (0);
 // }
+// -2147483648
+// 2147483647
+// -9223372036854775808
+// 9223372036854775807
