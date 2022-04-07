@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/07 15:45:36 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/07 16:39:28 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ char	*ft_unitoa(unsigned int n, char *str)
 	return (str);
 }
 
-char	*ft_dectohex(char *tab, unsigned long int nbr)
+char	*ft_dectohex(char *tab, unsigned long long int nbr)
 {
 	int		temp;
 	int		i;
@@ -240,7 +240,7 @@ char	*ft_dectohex(char *tab, unsigned long int nbr)
 	temp = 0;
 	str = NULL;
 	strrev = NULL;
-	while (nbr != 0)
+	while (nbr != 0 || !str)
 	{
 		temp = nbr % 16;
 		if (temp < 10)
@@ -259,7 +259,7 @@ char	*ft_dectohex(char *tab, unsigned long int nbr)
 	return (tab);
 }
 
-char	*ft_dectobighex(char *tab, long int nbr)
+char	*ft_dectobighex(char *tab, unsigned long int nbr)
 {
 	int		temp;
 	int		i;
@@ -269,7 +269,7 @@ char	*ft_dectobighex(char *tab, long int nbr)
 	temp = 0;
 	str = NULL;
 	strrev = NULL;
-	while (nbr != 0)
+	while (nbr != 0 || !str)
 	{
 		temp = nbr % 16;
 		if (temp < 10)
@@ -295,7 +295,7 @@ char	*ft_percent(char *tab, const char *str, int i)
 	tab = ft_charjoin(tab, '%');
 	c = str[i + 2];
 	if (c == 'c' || c == 's' || c == 'p' || c == 'x'
-		|| c == 'X' || c == 'i' || c == 'u' || c == '%')
+		|| c == 'X' || c == 'i' || c == 'u')
 		tab = ft_charjoin(tab, c);
 	return (tab);
 }
@@ -328,9 +328,9 @@ char	*ft_printf_options(char *tab, const char *str, int *ptri, va_list ptr)
 	else if (str[i + 1] == 'u')
 		tab = ft_unitoa(va_arg(ptr, unsigned int), tab);
 	else if (str[i + 1] == 'x')
-		tab = ft_dectohex(tab, va_arg(ptr, int));
+		tab = ft_dectohex(tab, va_arg(ptr, unsigned long int));
 	else if (str[i + 1] == 'X')
-		tab = ft_dectobighex(tab, va_arg(ptr, int));
+		tab = ft_dectobighex(tab, va_arg(ptr, unsigned long int));
 	else if (str[i + 1] == '%')
 		tab = ft_percent(tab, str, i);
 	return (tab);
@@ -379,26 +379,26 @@ int	ft_printf(const char *str, ...)
 }
 
 
-// int	main(void)
-// {
-// 	char	c;
-// 	char	s[] = "pommes et des";
-// 	int		d = 200000;
-// 	int		e;
-// 	int		*ptr;
+int	main(void)
+{
+	char	c;
+	char	s[] = "pommes et des";
+	int		d = 200000;
+	int		e;
+	int		*ptr;
 
-// 	ptr = &d;	
-// 	c = 'F';
-// 	// printf("%p", ptr);
-// 	ft_printf("%d", 54);
-// 	// printf("\n\n%d %d ", d, e);
-// 	// write(1, "\n", 2);
-// 	// write(1, d, 2);
-// 	// write(1, "\n", 2);
-// 	// write(1, e, 2);
-// 	// printf("\n %p \n", ptr);
-// 	return (0);
-// }
+	ptr = &d;	
+	c = 'F';
+	// printf("%p", ptr);
+	ft_printf("a%%% ");
+	printf("\na%%% ");
+	// write(1, "\n", 2);
+	// write(1, d, 2);
+	// write(1, "\n", 2);
+	// write(1, e, 2);
+	// printf("\n %p \n", ptr);
+	return (0);
+}
 // -2147483648
 // 2147483647
 // -9223372036854775808
