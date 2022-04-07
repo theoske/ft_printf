@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/07 16:39:28 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/07 17:38:44 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ char	*ft_unitoa(unsigned int n, char *str)
 	return (str);
 }
 
-char	*ft_dectohex(char *tab, unsigned long long int nbr)
+char	*ft_dectohex(char *tab, unsigned long int nbr)
 {
 	int		temp;
 	int		i;
@@ -328,9 +328,9 @@ char	*ft_printf_options(char *tab, const char *str, int *ptri, va_list ptr)
 	else if (str[i + 1] == 'u')
 		tab = ft_unitoa(va_arg(ptr, unsigned int), tab);
 	else if (str[i + 1] == 'x')
-		tab = ft_dectohex(tab, va_arg(ptr, unsigned long int));
+		tab = ft_dectohex(tab, va_arg(ptr, unsigned int));
 	else if (str[i + 1] == 'X')
-		tab = ft_dectobighex(tab, va_arg(ptr, unsigned long int));
+		tab = ft_dectobighex(tab, va_arg(ptr, unsigned int));
 	else if (str[i + 1] == '%')
 		tab = ft_percent(tab, str, i);
 	return (tab);
@@ -379,26 +379,26 @@ int	ft_printf(const char *str, ...)
 }
 
 
-int	main(void)
-{
-	char	c;
-	char	s[] = "pommes et des";
-	int		d = 200000;
-	int		e;
-	int		*ptr;
+// int	main(void)
+// {
+// 	char	c;
+// 	char	s[] = "pommes et des";
+// 	int		d = 200000;
+// 	int		e;
+// 	int		*ptr;
 
-	ptr = &d;	
-	c = 'F';
-	// printf("%p", ptr);
-	ft_printf("a%%% ");
-	printf("\na%%% ");
-	// write(1, "\n", 2);
-	// write(1, d, 2);
-	// write(1, "\n", 2);
-	// write(1, e, 2);
-	// printf("\n %p \n", ptr);
-	return (0);
-}
+// 	ptr = &d;	
+// 	c = 'F';
+// 	// printf("%p", ptr);
+// 	ft_printf("%x\n", 922337203685477587);
+// 	printf("%x\n", 922337203685477587);
+// 	// write(1, "\n", 2);
+// 	// write(1, d, 2);
+// 	// write(1, "\n", 2);
+// 	// write(1, e, 2);
+// 	// printf("\n %p \n", ptr);
+// 	return (0);
+// }
 // -2147483648
 // 2147483647
 // -9223372036854775808
