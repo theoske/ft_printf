@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/07 17:38:44 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/07 17:46:09 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,6 +312,17 @@ char	*ft_ptr(char *tab, unsigned long int nbr)
 	return (tab);
 }
 
+int	ft_printf2(int i, const char *str)
+{
+	if (str[i + 1] && str[i + 1] == '%')
+		i++;
+	if (str[i + 1] == 99 || str[i + 1] == 115 || str[i + 1] == 112
+		|| str[i + 1] == 100 || str[i + 1] == 105 || str[i + 1] == 117
+		|| str[i + 1] == 120 || str[i + 1] == 88)
+		i++;
+	return (i);
+}
+
 char	*ft_printf_options(char *tab, const char *str, int *ptri, va_list ptr)
 {
 	int		i;
@@ -333,18 +344,8 @@ char	*ft_printf_options(char *tab, const char *str, int *ptri, va_list ptr)
 		tab = ft_dectobighex(tab, va_arg(ptr, unsigned int));
 	else if (str[i + 1] == '%')
 		tab = ft_percent(tab, str, i);
+	*ptri = ft_printf2(i, str);
 	return (tab);
-}
-
-int	ft_printf2(int i, const char *str)
-{
-	if (str[i + 1] && str[i + 1] == '%')
-		i++;
-	if (str[i + 1] == 99 || str[i + 1] == 115 || str[i + 1] == 112
-		|| str[i + 1] == 100 || str[i + 1] == 105 || str[i + 1] == 117
-		|| str[i + 1] == 120 || str[i + 1] == 88)
-		i++;
-	return (i);
 }
 
 int	ft_printf(const char *str, ...)
@@ -364,10 +365,7 @@ int	ft_printf(const char *str, ...)
 			i++;
 		}
 		if (str[i] && str[i] == '%')
-		{
 			tab = ft_printf_options(tab, str, &i, ptr);
-			i = ft_printf2(i, str);
-		}
 		if (str[i])
 			i++;
 	}
@@ -377,7 +375,6 @@ int	ft_printf(const char *str, ...)
 	free (tab);
 	return (i);
 }
-
 
 // int	main(void)
 // {
