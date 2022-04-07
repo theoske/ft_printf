@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/07 14:28:21 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/07 15:11:53 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 #include <unistd.h>
 #include "printf.h"
 
-/* chercher % et les remplacer par variable correspondante 
-	via conversions en char et strjoin*/
-
-void	ft_putstr(char *tab)// se fait appeler deux fois
+void	ft_putstr(char *tab)
 {
 	int			i;
 	static int	once = 0;
@@ -188,7 +185,7 @@ char	*ft_itoa(int n, char *str)
 
 	i = 0;
 	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
+		return (ft_strjoin(str, "-2147483648"));
 	numbers = ft_numbers((long int)n);
 	tab = malloc(sizeof(char) * numbers);
 	if (!tab)
@@ -391,9 +388,8 @@ int	ft_printf(const char *str, ...)
 // 	ptr = &d;	
 // 	c = 'F';
 // 	// printf("%p", ptr);
-// 	d = ft_printf("\n %p %p ", 0, 0);
-// 	e = printf("\n %p %p ", 0, 0);
-// 	printf("\n\n%d %d ", d, e);
+// 	ft_printf("%d", 54);
+// 	// printf("\n\n%d %d ", d, e);
 // 	// write(1, "\n", 2);
 // 	// write(1, d, 2);
 // 	// write(1, "\n", 2);
