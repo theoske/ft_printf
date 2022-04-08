@@ -6,7 +6,7 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 10:27:39 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/07 18:20:37 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/08 14:35:00 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_percent(char *tab, const char *str, int i)
 	tab = ft_charjoin(tab, '%');
 	c = str[i + 2];
 	if (c == 'c' || c == 's' || c == 'p' || c == 'x'
-		|| c == 'X' || c == 'i' || c == 'u')
+		|| c == 'X' || c == 'i' || c == 'u' || c == 'd')
 		tab = ft_charjoin(tab, c);
 	return (tab);
 }
