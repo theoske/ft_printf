@@ -6,13 +6,13 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 18:01:03 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/07 18:10:56 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/11 14:33:25 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-long int	ft_numbers(long int n)
+int	ft_numbers(long int n)
 {
 	long int	numbers;
 
@@ -29,48 +29,48 @@ long int	ft_numbers(long int n)
 	return (numbers);
 }
 
-char	*filling(long int n, char *tab, long int j, long int numbers)
+int	ft_filling(long int n)
 {
+	int		j;
+	int		ret;
+	char	*tab;
+
+	ret = 0;
+	j = ft_numbers(n);
+	tab = NULL;
 	if (n == 0)
+		return (ft_putchar('0'));
+	tab = malloc(sizeof(char) * (j));
+	if (!tab)
+		return (0);
+	tab[j - 1] = 0;
+	j--;
+	while (j > 0)
 	{
-		tab[j] = 48;
-		tab[j + 1] = '\0';
-		return (tab);
-	}
-	while (n > 0)
-	{
-		numbers = n / 10;
-		tab[j] = n - (numbers * 10) + 48;
+		tab[j - 1] = (n % 10) + 48;
 		n /= 10;
 		j--;
 	}
-	return (tab);
+	ret += ft_putstr(tab);
+	free (tab);
+	return (ret);
 }
 
-char	*ft_itoa(int n, char *str)
+int	ft_itoa(int n)
 {
-	char		*tab;
 	long int	i;
-	long int	j;
-	long int	numbers;
+	int			ret;
 
 	i = 0;
+	ret = 0;
 	if (n == -2147483648)
-		return (ft_strjoin(str, "-2147483648"));
-	numbers = ft_numbers((long int)n);
-	tab = malloc(sizeof(char) * numbers);
-	if (!tab)
-		return (NULL);
+		return (ft_putstr("-2147483648"));
 	if (n < 0)
 	{
-		tab[i] = '-';
+		ret += ft_putchar('-');
 		i++;
 		n *= -1;
 	}
-	j = numbers - 2;
-	tab[numbers - 1] = '\0';
-	tab = filling((long int)n, tab, j, numbers);
-	str = ft_strjoin(str, tab);
-	free (tab);
-	return (str);
+	ret += ft_filling(n);
+	return (ret);
 }

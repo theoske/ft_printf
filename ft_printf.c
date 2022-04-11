@@ -6,71 +6,11 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:09:06 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/11 14:24:12 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/11 14:34:17 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "ft_printf.h"
-#include <stdarg.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-
-int	ft_putchar(char c)
-{
-	return (write(1, &c, 1));
-}
-
-int	ft_strlen(char *str)
-{
-	int		i;
-
-	if (!str)
-		return (0);
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-int	ft_putstr(char *str)
-{
-	int		i;
-	int		ret;
-
-	i = 0;
-	ret = 0;
-	if (!str)
-		ret += ft_putstr("(null)");
-	while (str && str[i])
-	{
-		ret += ft_putchar(str[i]);
-		i++;
-	}
-	return (ret);
-}
-
-char	*ft_charjoin(char *tab, char c)
-{
-	int			i;
-	int			size;
-	char		*str;
-
-	i = 0;
-	size = ft_strlen(tab);
-	str = malloc(sizeof(char) * (size + 2));
-	while (i < size)
-	{
-		str[i] = tab[i];
-		i++;
-	}
-	if (!str)
-		return (NULL);
-	str[size] = c;
-	str[size + 1] = '\0';
-	free(tab);
-	return (str);
-}
+#include "ft_printf.h"
 
 int	ft_dectobighex(unsigned long int nbr)
 {
@@ -138,69 +78,6 @@ int	ft_ptr(unsigned long int nbr)
 		return (ret);
 	}
 	ret += ft_dectohex(nbr);
-	return (ret);
-}
-
-int	ft_numbers(long int n)
-{
-	long int	numbers;
-
-	numbers = 1;
-	if (n == 0)
-		numbers = 2;
-	if (n < 0)
-		numbers++;
-	while (n != 0)
-	{
-		n /= 10;
-		numbers++;
-	}
-	return (numbers);
-}
-
-int	ft_filling(long int n)
-{
-	int		j;
-	int		ret;
-	char	*tab;
-
-	ret = 0;
-	j = ft_numbers(n);
-	tab = NULL;
-	if (n == 0)
-		return (ft_putchar('0'));
-	tab = malloc(sizeof(char) * (j));
-	if (!tab)
-		return (0);
-	tab[j - 1] = 0;
-	j--;
-	while (j > 0)
-	{
-		tab[j - 1] = (n % 10) + 48;
-		n /= 10;
-		j--;
-	}
-	ret += ft_putstr(tab);
-	free (tab);
-	return (ret);
-}
-
-int	ft_itoa(int n)
-{
-	long int	i;
-	int			ret;
-
-	i = 0;
-	ret = 0;
-	if (n == -2147483648)
-		return (ft_putstr("-2147483648"));
-	if (n < 0)
-	{
-		ret += ft_putchar('-');
-		i++;
-		n *= -1;
-	}
-	ret += ft_filling(n);
 	return (ret);
 }
 
@@ -279,12 +156,3 @@ int	ft_printf(const char *str, ...)
 	va_end(ptr);
 	return (ret);
 }
-
-// int main()
-// {
-// 	int d;
-// 	int *ptri = &d;
-// 	d = ft_printf("jem %%%d%c\n%X ange\n", -2, 'f', -429496295);
-// 	printf("jem %%%d%c\n%X ange\n", -2, 'f', -429496295);
-// 	return 0;
-// }
