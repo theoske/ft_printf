@@ -6,11 +6,38 @@
 /*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 18:01:03 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/11 14:33:25 by tkempf-e         ###   ########.fr       */
+/*   Updated: 2022/04/11 15:07:51 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+int	ft_dectobighex(unsigned long int nbr)
+{
+	int		temp;
+	int		i;
+	int		ret;
+	char	*str;
+
+	temp = 0;
+	ret = 0;
+	str = NULL;
+	while (nbr != 0 || !str)
+	{
+		temp = nbr % 16;
+		if (temp < 10)
+			temp = temp + 48;
+		else
+			temp = temp + 55;
+		str = ft_charjoin(str, temp);
+		nbr = nbr / 16;
+	}
+	i = ft_strlen(str);
+	while (i--)
+		ret += ft_putchar(str[i]);
+	free (str);
+	return (ret);
+}
 
 int	ft_numbers(long int n)
 {
