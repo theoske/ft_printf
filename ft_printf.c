@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tkempf-e <tkempf-e@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:09:06 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/11 13:22:23 by theo             ###   ########.fr       */
+/*   Updated: 2022/04/11 14:24:12 by tkempf-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ int	ft_putstr(char *str)
 
 	i = 0;
 	ret = 0;
-	while (str[i])
+	if (!str)
+		ret += ft_putstr("(null)");
+	while (str && str[i])
 	{
 		ret += ft_putchar(str[i]);
 		i++;
@@ -68,6 +70,33 @@ char	*ft_charjoin(char *tab, char c)
 	str[size + 1] = '\0';
 	free(tab);
 	return (str);
+}
+
+int	ft_dectobighex(unsigned long int nbr)
+{
+	int		temp;
+	int		i;
+	int		ret;
+	char	*str;
+
+	temp = 0;
+	ret = 0;
+	str = NULL;
+	while (nbr != 0 || !str)
+	{
+		temp = nbr % 16;
+		if (temp < 10)
+			temp = temp + 48;
+		else
+			temp = temp + 55;
+		str = ft_charjoin(str, temp);
+		nbr = nbr / 16;
+	}
+	i = ft_strlen(str);
+	while (i--)
+		ret += ft_putchar(str[i]);
+	free (str);
+	return (ret);
 }
 
 int	ft_dectohex(unsigned long int nbr)
@@ -133,18 +162,17 @@ int	ft_filling(long int n)
 {
 	int		j;
 	int		ret;
-	int		temp;
 	char	*tab;
 
 	ret = 0;
 	j = ft_numbers(n);
 	tab = NULL;
-	tab = malloc(sizeof(char) * (j + 1));
-	if (!tab)
-		return (0);
 	if (n == 0)
 		return (ft_putchar('0'));
-	tab[j] = 0;
+	tab = malloc(sizeof(char) * (j));
+	if (!tab)
+		return (0);
+	tab[j - 1] = 0;
 	j--;
 	while (j > 0)
 	{
@@ -160,7 +188,6 @@ int	ft_filling(long int n)
 int	ft_itoa(int n)
 {
 	long int	i;
-	long int	j;
 	int			ret;
 
 	i = 0;
@@ -174,6 +201,20 @@ int	ft_itoa(int n)
 		n *= -1;
 	}
 	ret += ft_filling(n);
+	return (ret);
+}
+
+int	ft_percent(int i, const char *str)
+{
+	int		ret;
+
+	ret = 0;
+	ret += ft_putchar('%');
+	if ((str[i + 2]) && (str[i + 2] == 'c' || str[i + 2] == 's'
+			|| str[i + 2] == 'd'
+			|| str[i + 2] == 'i' || str[i + 2] == 'x' || str[i + 2] == 'X'
+			|| str[i + 2] == 'p' || str[i + 2] == 'u'))
+		ret += ft_putchar(str[i + 2]);
 	return (ret);
 }
 
@@ -203,12 +244,12 @@ int	ft_printf_options(const char *str, int *ptri, va_list ptr)
 		ret += ft_itoa(va_arg(ptr, int));
 	else if (str[*ptri + 1] == 'u')
 		ret += ft_filling(va_arg(ptr, unsigned int));
-	// else if (str[i + 1] == 'x')
-	// 	ret += ft_dectohex(va_arg(ptr, unsigned int));
-	// else if (str[i + 1] == 'X')
-	// 	ret += ft_dectobighex(va_arg(ptr, unsigned int));
-	// else if (str[i + 1] == '%')
-	// 	ret += ft_percent(str, i);
+	else if (str[*ptri + 1] == 'x')
+		ret += ft_dectohex(va_arg(ptr, unsigned int));
+	else if (str[*ptri + 1] == 'X')
+		ret += ft_dectobighex(va_arg(ptr, unsigned int));
+	else if (str[*ptri + 1] == '%')
+		ret += ft_percent(*ptri, str);
 	*ptri = ft_printf2(*ptri, str);
 	return (ret);
 }
@@ -239,14 +280,11 @@ int	ft_printf(const char *str, ...)
 	return (ret);
 }
 
-#include <stdio.h>
-
-int main()
-{
-	int d;
-	int *ptri = &d;
-	
-	d = ft_printf("jem %%%d%c\n%u ange\n", -2, 'f', -429496295);
-	printf("jem %%%d%c\n%u ange\n", -2, 'f', -429496295);
-	return 0;
-}
+// int main()
+// {
+// 	int d;
+// 	int *ptri = &d;
+// 	d = ft_printf("jem %%%d%c\n%X ange\n", -2, 'f', -429496295);
+// 	printf("jem %%%d%c\n%X ange\n", -2, 'f', -429496295);
+// 	return 0;
+// }
