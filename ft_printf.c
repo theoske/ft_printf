@@ -6,7 +6,7 @@
 /*   By: theo <theo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:09:06 by tkempf-e          #+#    #+#             */
-/*   Updated: 2022/04/10 19:40:47 by theo             ###   ########.fr       */
+/*   Updated: 2022/04/11 13:22:23 by theo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	ft_numbers(long int n)
 	return (numbers);
 }
 
-int	filling(long int n)
+int	ft_filling(long int n)
 {
 	int		j;
 	int		ret;
@@ -173,7 +173,7 @@ int	ft_itoa(int n)
 		i++;
 		n *= -1;
 	}
-	ret += filling(n);
+	ret += ft_filling(n);
 	return (ret);
 }
 
@@ -201,8 +201,8 @@ int	ft_printf_options(const char *str, int *ptri, va_list ptr)
 		ret += ft_ptr(va_arg(ptr, unsigned long int));
 	else if (str[*ptri + 1] == 'd' || str[*ptri + 1] == 'i')
 		ret += ft_itoa(va_arg(ptr, int));
-	// else if (str[i + 1] == 'u')
-	// 	ret += ft_unitoa(va_arg(ptr, unsigned int));
+	else if (str[*ptri + 1] == 'u')
+		ret += ft_filling(va_arg(ptr, unsigned int));
 	// else if (str[i + 1] == 'x')
 	// 	ret += ft_dectohex(va_arg(ptr, unsigned int));
 	// else if (str[i + 1] == 'X')
@@ -246,7 +246,7 @@ int main()
 	int d;
 	int *ptri = &d;
 	
-	d = ft_printf("jem %%%d%c ange\n", -2, 'f');
-	// printf("jem %d ange\n", 54);
+	d = ft_printf("jem %%%d%c\n%u ange\n", -2, 'f', -429496295);
+	printf("jem %%%d%c\n%u ange\n", -2, 'f', -429496295);
 	return 0;
 }
